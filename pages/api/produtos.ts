@@ -1,14 +1,14 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse } from "next";
 
 const produtos = (req: NextApiRequest, res: NextApiResponse) => {
   const data = {
     produtos: [
-      { nome: 'Produto 1' },
-      { nome: 'Produto 2' },
-      { nome: 'Produto 3' },
-    ]
-  }
-  res.status(200).json(data)
-}
+      { nome: "Leite", sku: "1234567890" },
+      { nome: "Cafe", sku: "1234567891" },
+      { nome: "Chocolate", sku: "1234567892" },
+    ],
+  };
+  res.status(200).json(data);
+};
 
-export default produtos
+export default produtos;

@@ -1,3 +1,4 @@
 export interface IProduto {
-    nome: string
+  nome: string;
+  sku: string;
 }
