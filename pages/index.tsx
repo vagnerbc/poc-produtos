@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { GetStaticProps, GetServerSideProps } from "next";
-import { Box } from "@chakra-ui/react";
+import { Box, SimpleGrid } from "@chakra-ui/react";
 
 import Produto from "../components/produto";
 import { IProduto } from "../model/produto";
@@ -30,10 +30,12 @@ export default function Home({ produtos }: Props) {
   }, []);
 
   return (
-    <Box>
-      {produtos.map((produto, index) => (
-        <Produto produto={produto} key={index} />
-      ))}
+    <Box w='100%' h='100vh' p={4}>
+      <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 3, xl: 4 }} spacing={4}>
+        {produtos.map((produto, index) => (
+          <Produto produto={produto} key={index} />
+        ))}
+      </SimpleGrid>
     </Box>
   );
 }

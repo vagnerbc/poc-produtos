@@ -1,16 +1,16 @@
 import { Center } from "@chakra-ui/react";
 import React from "react";
-import { IProduto } from "../../model/produto";
+import { IProduto } from "model/produto";
 
 type Props = {
-  produto: IProduto;
-};
+  produto: IProduto
+}
 const Produto = ({ produto }: Props) => {
   return (
-    <Center bg="tomato" h="100px" color="white">
+    <Center bg="primary.base" h="100px" w="100%" color="white">
       {produto.nome} - {produto.sku}
     </Center>
-  );
-};
+  )
+}
 
 export default Produto;
