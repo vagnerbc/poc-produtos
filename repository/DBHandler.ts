@@ -1,7 +1,7 @@
 import { IDBPDatabase, openDB } from "idb";
 import IDBHandler from "./IDBHandler";
 
-class IndexedDbHandler implements IDBHandler {
+class DBHandler implements IDBHandler {
   private database: string;
   private db: any;
 
@@ -19,7 +19,7 @@ class IndexedDbHandler implements IDBHandler {
             }
             db.createObjectStore(tableName, {
               autoIncrement: true,
-              keyPath: "id",
+              keyPath: "sku",
             });
           }
         },
@@ -29,7 +29,7 @@ class IndexedDbHandler implements IDBHandler {
     }
   }
 
-  public async getValue(tableName: string, id: number) {
+  public async getValue(tableName: string, id: string) {
     const tx = this.db.transaction(tableName, "readonly");
     const store = tx.objectStore(tableName);
     const result = await store.get(id);
@@ -63,7 +63,7 @@ class IndexedDbHandler implements IDBHandler {
     return this.getAllValue(tableName);
   }
 
-  public async deleteValue(tableName: string, id: number) {
+  public async deleteValue(tableName: string, id: string) {
     const tx = this.db.transaction(tableName, "readwrite");
     const store = tx.objectStore(tableName);
     const result = await store.get(id);
@@ -77,4 +77,4 @@ class IndexedDbHandler implements IDBHandler {
   }
 }
 
-export default IndexedDbHandler;
+export default DBHandler;

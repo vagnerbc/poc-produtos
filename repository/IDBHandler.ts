@@ -1,5 +1,7 @@
 export default interface IndexedDb {
-  getValue(tableName: string, id: number);
+  createObjectStore(tableNames: string[]);
+
+  getValue(tableName: string, id: string);
 
   getAllValue(tableName: string);
 
@@ -7,5 +9,5 @@ export default interface IndexedDb {
 
   putBulkValue(tableName: string, values: object[]);
 
-  deleteValue(tableName: string, id: number);
+  deleteValue(tableName: string, id: string);
 }

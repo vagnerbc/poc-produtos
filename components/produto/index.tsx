@@ -3,14 +3,14 @@ import React from "react";
 import { IProduto } from "model/produto";
 
 type Props = {
-  produto: IProduto
-}
+  produto: IProduto;
+};
 const Produto = ({ produto }: Props) => {
   return (
     <Center bg="primary.base" h="100px" w="100%" color="white">
-      {produto.nome} - {produto.sku}
+      {produto.name} - {produto.sku}
     </Center>
-  )
-}
+  );
+};
 
 export default Produto;
