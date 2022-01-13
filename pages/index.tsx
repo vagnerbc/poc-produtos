@@ -1,39 +1,31 @@
-import { useEffect } from "react";
-import { GetStaticProps, GetServerSideProps } from "next";
+import { useEffect, useState } from "react";
+import { GetServerSideProps } from "next";
 import { Box, SimpleGrid } from "@chakra-ui/react";
 
-import Produto from "../components/produto";
-import { IProduto } from "../model/produto";
-import IndexedDBHandler from "../repository/indexedDBHandler";
+import Product from "components/product";
+import { ProductCollection } from "services/proxies/product/collection";
+import { getProxy } from "services/proxies";
 
-type Props = {
-  produtos: IProduto[];
-};
+// type Props = {
+//   produtos: IProduto[];
+// };
 
-export default function Home({ produtos }: Props) {
+export default function Home() {
+  const [products, setProducts] = useState<ProductCollection[]>([]);
   useEffect(() => {
-    const adicionaProdutosIndexedDB = async () => {
-      const indexedDb = new IndexedDBHandler("test");
-      await indexedDb.createObjectStore(["produtos"]);
-
-      await indexedDb.putBulkValue("produtos", [...produtos]);
-
-      // TESTS
-      // await indexedDb.putValue('produtos', { name: 'Leite' });
-      // await indexedDb.putBulkValue('produtos', [{ name: 'Cafe' }, { name: 'Chocolate' }]);
-      // await indexedDb.getValue('produtos', 1);
-      // await indexedDb.getAllValue('produtos');
-      // await indexedDb.deleteValue('produtos', 1);
-    };
-
-    adicionaProdutosIndexedDB();
+    const getProducts = async () => {
+      const product = getProxy('products', '/products')
+      const response = await product.getAll();
+      setProducts(response.data);
+    }
+    getProducts()
   }, []);
 
   return (
     <Box w='100%' h='100vh' p={4}>
       <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 3, xl: 4 }} spacing={4}>
-        {produtos.map((produto, index) => (
-          <Produto produto={produto} key={index} />
+        {products.map((product, index) => (
+          <Product product={product} key={index} />
         ))}
       </SimpleGrid>
     </Box>
@@ -44,7 +36,7 @@ export default function Home({ produtos }: Props) {
  * STATIC GENERATION
  */
 // export const getStaticProps: GetStaticProps = async (context) => {
-//   const res = await fetch("http://localhost:3000/api/produtos");
+//   const res = await fetch("http://localhost:3000/api/products");
 //   const json = await res.json();
 
 //   return {
@@ -57,13 +49,13 @@ export default function Home({ produtos }: Props) {
 /**
  * SERVER SIDE RENDERING
  */
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const res = await fetch("http://localhost:3000/api/produtos");
-  const json = await res.json();
+// export const getServerSideProps: GetServerSideProps = async (context) => {
+//   const res = await fetch("http://localhost:3000/api/products");
+//   const json = await res.json();
 
-  return {
-    props: {
-      produtos: json.produtos,
-    },
-  };
-};
+//   return {
+//     props: {
+//       produtos: json.produtos,
+//     },
+//   };
+// };
