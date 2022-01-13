@@ -1,4 +1,4 @@
-import { AbstractRepository } from "./abstract-repository";
+import { AbstractRepository } from "../config/abstract-repository";
 
 export type ProductCollection = {
   sku: string;

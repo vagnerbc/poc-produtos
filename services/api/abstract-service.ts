@@ -24,10 +24,4 @@ export abstract class AbstractService<T> {
   async delete(keys: string[]) {
     return this.api.delete(`${this.endpoint}`, { data: { keys } });
   }
-
-  async sync(entityArray: T[]) {
-    return this.api.post(`${this.endpoint}/sync`, {
-      data: { [this.entity]: entityArray },
-    });
-  }
 }

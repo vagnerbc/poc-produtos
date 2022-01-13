@@ -1,4 +1,4 @@
-import { Repository } from "./config";
+import { Repository } from "./";
 
 export abstract class AbstractRepository<T> {
   private repository: Repository<T>;

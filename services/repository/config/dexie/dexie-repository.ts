@@ -1,6 +1,5 @@
-import Dexie, { Table, TableSchema } from "dexie";
-
-import { Repository } from "./repository";
+import Dexie from "dexie";
+import { Repository } from "../repository";
 import { DexieDB } from "./config";
 
 type SaveEntity<T> = T & { indexed_id?: number };
