@@ -5,8 +5,7 @@ export type Collection = {
   keyName: string;
 }
 
-type SaveEntity<T> = T & { indexed_id?: number }
-
+export type DbEntity<T> = T & { indexed_id?: number }
 export class DbCollection<T> {
   private dbConnection: DataBaseConnection;
   private tableName: string;
@@ -31,7 +30,7 @@ export class DbCollection<T> {
   async save(entityArray: T[]) {
     const connection = this.dbConnection[this.tableName];
     const keys = entityArray.map(entity => entity[this.keyName]);
-    const entities: SaveEntity<T>[] = await connection.where(this.keyName).anyOf(keys).toArray();
+    const entities: DbEntity<T>[] = await connection.where(this.keyName).anyOf(keys).toArray();
 
     const idsMap = new Map(entities.map(entity => [entity[this.keyName], entity.indexed_id]));
     const entitiesToSave = entityArray.map(entity => ({
