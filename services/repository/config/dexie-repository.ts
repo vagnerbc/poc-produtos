@@ -1,21 +1,18 @@
 import Dexie, { Table, TableSchema } from "dexie";
 
-import { Database } from "./database";
+import { Repository } from "./repository";
+import { DexieDB } from "./config";
 
 type SaveEntity<T> = T & { indexed_id?: number };
 
-export class DexieDB<T> implements Database<T> {
-  private dexie: Dexie;
+export class DexieRepository<T> implements Repository<T> {
+  private dexie: Dexie = DexieDB.getInstance();
   private tableName: string;
   private keyName: string;
 
   constructor(tableName: string, keyName: string) {
     this.tableName = tableName;
     this.keyName = keyName;
-  }
-
-  initialize(version: number, schema: { [tableName: string]: string }): void {
-    this.dexie.version(version).stores(schema);
   }
 
   async save(entityArray: T[]): Promise<void> {
