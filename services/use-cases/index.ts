@@ -1,8 +1,8 @@
-import { ProductUseCase } from "./products/product";
-import { ProductService } from "services/api/products/product-service";
-import { ProductRepository } from "services/repository/products/product-repository";
+import { ProdutoUseCase } from "services/use-cases/produtos/produto";
+import { ProdutoService } from "services/api/produtos/produto-service";
+import { ProdutoRepository } from "services/repository/produtos/produto-repository";
 
-export const productUseCase = new ProductUseCase(
-  new ProductService(),
-  new ProductRepository()
+export const produtoUseCase = new ProdutoUseCase(
+  new ProdutoService(),
+  new ProdutoRepository()
 );

@@ -1,17 +1,17 @@
 import { Center } from "@chakra-ui/react";
 import React from "react";
-import { TProduct } from "services/api/products/types";
+import { TProduto } from "services/api/produtos/types";
 
 type Props = {
-  product: TProduct;
+  produto: TProduto;
 };
 
-const Product = ({ product }: Props) => {
+const Produto = ({ produto }: Props) => {
   return (
     <Center bg="primary.base" h="100px" w="100%" color="white">
-      {product.name} - {product.sku}
+      {produto.name} - {produto.sku}
     </Center>
   );
 };
 
-export default Product;
+export default Produto;

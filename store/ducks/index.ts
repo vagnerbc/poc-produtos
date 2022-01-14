@@ -1,14 +1,14 @@
 import { all } from "redux-saga/effects";
-import * as productsDuck from "./products";
+import * as produtosDuck from "./produtos";
 
 export type State = {
-  products: productsDuck.State;
+  produtos: produtosDuck.State;
 };
 
-export const reducer = { products: productsDuck.reducer };
-export const actions = Object.freeze({ products: productsDuck.actions });
-export const selectors = Object.freeze({ products: productsDuck.actions });
+export const reducer = { produtos: produtosDuck.reducer };
+export const actions = Object.freeze({ produtos: produtosDuck.actions });
+export const selectors = Object.freeze({ produtos: produtosDuck.actions });
 
 export const sagas = function* () {
-  yield all([...productsDuck.sagas]);
+  yield all([...produtosDuck.sagas]);
 };

@@ -1,21 +1,21 @@
 import { Box, SimpleGrid } from "@chakra-ui/react";
-import Product from "components/product";
+import Produto from "components/produto";
 import { useEffect } from "react";
 import { actions, useDispatch, useSelector } from "store";
 
 export default function Home() {
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.products.products);
+  const produtos = useSelector((state) => state.produtos.produtos);
 
   useEffect(() => {
-    dispatch(actions.products.sync());
+    dispatch(actions.produtos.sync());
   }, [dispatch]);
 
   return (
     <Box w="100%" h="100vh" p={4}>
       <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 3, xl: 4 }} spacing={4}>
-        {products.map((product, index) => (
-          <Product product={product} key={index} />
+        {produtos.map((produto, index) => (
+          <Produto produto={produto} key={index} />
         ))}
       </SimpleGrid>
     </Box>
@@ -26,7 +26,7 @@ export default function Home() {
  * STATIC GENERATION
  */
 // export const getStaticProps: GetStaticProps = async (context) => {
-//   const res = await fetch("http://localhost:3000/api/products");
+//   const res = await fetch("http://localhost:3000/api/produtos");
 //   const json = await res.json();
 
 //   return {
@@ -40,7 +40,7 @@ export default function Home() {
  * SERVER SIDE RENDERING
  */
 // export const getServerSideProps: GetServerSideProps = async (context) => {
-//   const res = await fetch("http://localhost:3000/api/products");
+//   const res = await fetch("http://localhost:3000/api/produtos");
 //   const json = await res.json();
 
 //   return {
