@@ -3,7 +3,7 @@ import Dexie from "dexie";
 const version = 1;
 
 const schema = {
-  produtos: "++indexed_id, sku, name",
+  produtos: "++indexed_id, sku, name, status",
 };
 
 export class DexieDB {

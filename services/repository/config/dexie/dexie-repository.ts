@@ -39,6 +39,11 @@ export class DexieRepository<T> implements Repository<T> {
     return await connection.toArray();
   }
 
+  async getByKey(key: string, value: any): Promise<T[]> {
+    const connection = this.dexie[this.tableName];
+    return await connection.where(key).equals(value).toArray();
+  }
+
   async delete(keys: string[]): Promise<void> {
     const connection = this.dexie[this.tableName];
     await this.dexie.transaction("rw", connection, async () => {

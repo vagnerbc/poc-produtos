@@ -7,8 +7,12 @@ export abstract class AbstractRepository<T> {
     this.repository = new Repository(tableName, keyName);
   }
 
-  async getAll() { 
+  async getAll() {
     return await this.repository.getAll();
+  }
+
+  async getByKey(key: string, value: any) {
+    return await this.repository.getByKey(key, value);
   }
 
   async save(entityArray: T[]) {

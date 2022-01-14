@@ -13,7 +13,7 @@ export default function Home() {
 
   return (
     <Box w="100%" h="100vh" p={4}>
-      <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 3, xl: 4 }} spacing={4}>
+      <SimpleGrid columns={{ base: 1, sm: 1, md: 2, lg: 3, xl: 4 }} spacing={4}>
         {produtos.map((produto, index) => (
           <Produto produto={produto} key={index} />
         ))}
