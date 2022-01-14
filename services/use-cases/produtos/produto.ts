@@ -20,13 +20,13 @@ export class ProdutoUseCase {
     return produtos.data;
   }
 
-  async save(produto: any) {
+  async save(produto: TProduto) {
     await this.produtoService.save([produto]);
   }
 
-  async update(produto: any) {
+  async update(produto: TProduto) {
     await this.produtoService.update([produto]);
-    this.produtoRepository.save([produto]);
+    await this.produtoRepository.save([produto]);
   }
 
   async delete(id: string) {
@@ -35,7 +35,7 @@ export class ProdutoUseCase {
   }
 
   async sync(): Promise<TProduto[]> {
-    const reference = localStorage.getItem("produtoReference");
+    const reference = localStorage.getItem("produto_last_sync");
     const { data } = await this.produtoService.sync(reference);
 
     await this.produtoRepository.save(data.updated);
@@ -43,7 +43,7 @@ export class ProdutoUseCase {
 
     const produtos = await this.produtoRepository.getAll();
 
-    localStorage.setItem("produtoReference", data.last_sync);
+    localStorage.setItem("produto_last_sync", data.last_sync);
 
     return produtos;
   }
