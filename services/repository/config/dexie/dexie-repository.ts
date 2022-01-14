@@ -16,20 +16,22 @@ export class DexieRepository<T> implements Repository<T> {
 
   async save(entityArray: T[]): Promise<void> {
     const connection = this.dexie[this.tableName];
-    const keys = entityArray.map((entity) => entity[this.keyName]);
-    const entities: SaveEntity<T>[] = await connection
-      .where(this.keyName)
-      .anyOf(keys)
-      .toArray();
+    this.dexie.transaction("rw", connection, async () => {
+      const keys = entityArray.map((entity) => entity[this.keyName]);
+      const entities: SaveEntity<T>[] = await connection
+        .where(this.keyName)
+        .anyOf(keys)
+        .toArray();
 
-    const idsMap = new Map(
-      entities.map((entity) => [entity[this.keyName], entity.indexed_id])
-    );
-    const entitiesToSave = entityArray.map((entity) => ({
-      ...entity,
-      indexed_id: idsMap.get(entity[this.keyName]),
-    }));
-    connection.bulkPut(entitiesToSave);
+      const idsMap = new Map(
+        entities.map((entity) => [entity[this.keyName], entity.indexed_id])
+      );
+      const entitiesToSave = entityArray.map((entity) => ({
+        ...entity,
+        indexed_id: idsMap.get(entity[this.keyName]),
+      }));
+      connection.bulkPut(entitiesToSave);
+    });
   }
 
   getAll(): T[] {
@@ -39,6 +41,8 @@ export class DexieRepository<T> implements Repository<T> {
 
   delete(keys: string[]): void {
     const connection = this.dexie[this.tableName];
-    connection.where(this.keyName).anyOf(keys).delete();
+    this.dexie.transaction("rw", connection, async () => {
+      connection.where(this.keyName).anyOf(keys).delete();
+    });
   }
 }
