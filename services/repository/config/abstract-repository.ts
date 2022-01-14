@@ -7,15 +7,15 @@ export abstract class AbstractRepository<T> {
     this.repository = new Repository(tableName, keyName);
   }
 
-  getAll() {
-    return this.repository.getAll();
+  async getAll() { 
+    return await this.repository.getAll();
   }
 
-  save(entityArray: T[]) {
-    this.repository.save(entityArray);
+  async save(entityArray: T[]) {
+    await this.repository.save(entityArray);
   }
 
-  delete(keys: string[]) {
-    this.repository.delete(keys);
+  async delete(keys: string[]) {
+    await this.repository.delete(keys);
   }
 }

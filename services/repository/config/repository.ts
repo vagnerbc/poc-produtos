@@ -1,5 +1,5 @@
 export interface Repository<T> {
-  save(entityArray: T[]): void;
-  getAll(): T[];
-  delete(keys: string[]): void;
+  save(entityArray: T[]): Promise<void>;
+  getAll(): Promise<T[]>;
+  delete(keys: string[]): Promise<void>;
 }

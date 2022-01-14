@@ -1,27 +1,28 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ProductCollection } from "services/repository/products/product-repository";
+import { TProduct } from "services/api/products/types";
+
+type TStatus = "pristine" | "loading" | "success" | "failure"
 
 export type State = {
-  products: ProductCollection[];
-  status: "pristine" | "fetching" | "success" | "failure";
+  products: TProduct[];
+  syncStatus: TStatus;
 };
 
 const initialState: State = {
   products: [],
-  status: "pristine",
+  syncStatus: "pristine",
 };
 
-export type FetchProducts = ProductCollection[];
 const reducers = {
-  fetch: (state: State) => {
-    state.status = "fetching";
+  sync: (state:State) => {
+    state.syncStatus = "loading";
   },
-  fetchSuccess: (state: State, action: PayloadAction<FetchProducts>) => {
+  syncSuccess: (state: State, action: PayloadAction<TProduct[]>) => {
     state.products = action.payload;
-    state.status = "success";
+    state.syncStatus = "success";
   },
-  fetchFailure: (state: State) => {
-    state.status = "failure";
+  syncFailure: (state: State) => {
+    state.syncStatus = "failure";
   },
 };
 

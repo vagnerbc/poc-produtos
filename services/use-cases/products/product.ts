@@ -1,4 +1,5 @@
 import { ProductService } from "services/api/products/product-service";
+import { TProduct } from "services/api/products/types";
 import { ProductRepository } from "services/repository/products/product-repository";
 
 export class ProductUseCase {
@@ -15,7 +16,7 @@ export class ProductUseCase {
 
   async getAll() {
     const products = await this.productService.getAll();
-    this.productRepository.save(products.data);
+    await this.productRepository.save(products.data);
     return products.data;
   }
 
@@ -30,13 +31,20 @@ export class ProductUseCase {
 
   async delete(id: string) {
     await this.productService.delete([id]);
-    this.productRepository.delete([id]);
+    await this.productRepository.delete([id]);
   }
 
-  async sync() {
-    const response = await this.productService.sync();
+  async sync(): Promise<TProduct[]> {
+    const reference = localStorage.getItem('productReference');
+    const { data } = await this.productService.sync(reference);
 
-    this.productRepository.save(response.data.updated);
-    this.productRepository.delete(response.data.deleted);
+    await this.productRepository.save(data.updated);
+    await this.productRepository.delete(data.deleted);
+
+    const products = await this.productRepository.getAll();
+
+    localStorage.setItem('productReference', data.last_sync);
+
+    return products;
   }
 }

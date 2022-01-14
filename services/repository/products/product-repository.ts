@@ -1,11 +1,6 @@
+import { TProduct } from "services/api/products/types";
 import { AbstractRepository } from "../config/abstract-repository";
-
-export type ProductCollection = {
-  sku: string;
-  name: string;
-};
-
-export class ProductRepository extends AbstractRepository<ProductCollection> {
+export class ProductRepository extends AbstractRepository<TProduct> {
   constructor() {
     super("products", "sku");
   }

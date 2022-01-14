@@ -1,18 +1,18 @@
-import { actions } from "./slice";
-import { takeLatest, put, call } from "redux-saga/effects";
+import { call, put, takeLatest } from "redux-saga/effects";
+import { TProduct } from 'services/api/products/types';
 import { productUseCase } from "services/use-cases";
-import { ProductCollection } from "services/repository/products/product-repository";
+import { actions } from "./slice";
 
-export const sagas = [takeLatest(actions.fetch.type, fetchSaga)];
+export const sagas = [
+  takeLatest(actions.sync.type, syncSaga)
+];
 
-function* fetchSaga() {
+function* syncSaga(){
   try {
-    const products: ProductCollection[] = yield call(() =>
-      productUseCase.getAll()
-    );
-    yield put(actions.fetchSuccess(products));
+    const products:TProduct[] = yield call(() => productUseCase.sync());
+    yield put(actions.syncSuccess(products));
   } catch (error) {
     console.warn(error);
-    yield put(actions.fetchFailure());
+    yield put(actions.syncFailure());
   }
 }

@@ -8,16 +8,8 @@ export default function Home() {
   const products = useSelector((state) => state.products.products);
 
   useEffect(() => {
-    dispatch(actions.products.fetch());
+    dispatch(actions.products.sync());
   }, [dispatch]);
-
-  // useEffect(() => {
-  //   const syncProducts = async () => {
-  //     await productUseCase.sync();
-  //   };
-
-  //   syncProducts();
-  // }, []);
 
   return (
     <Box w="100%" h="100vh" p={4}>

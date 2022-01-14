@@ -1,9 +1,9 @@
 import { Center } from "@chakra-ui/react";
 import React from "react";
-import { ProductCollection } from "services/repository/product-repository";
+import { TProduct } from "services/api/products/types";
 
 type Props = {
-  product: ProductCollection;
+  product: TProduct;
 };
 
 const Product = ({ product }: Props) => {

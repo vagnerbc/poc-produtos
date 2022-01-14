@@ -16,7 +16,7 @@ export class DexieRepository<T> implements Repository<T> {
 
   async save(entityArray: T[]): Promise<void> {
     const connection = this.dexie[this.tableName];
-    this.dexie.transaction("rw", connection, async () => {
+    await this.dexie.transaction("rw", connection, async () => {
       const keys = entityArray.map((entity) => entity[this.keyName]);
       const entities: SaveEntity<T>[] = await connection
         .where(this.keyName)
@@ -34,14 +34,14 @@ export class DexieRepository<T> implements Repository<T> {
     });
   }
 
-  getAll(): T[] {
+  async getAll(): Promise<T[]> {
     const connection = this.dexie[this.tableName];
-    return connection.toArray();
+    return await connection.toArray();
   }
 
-  delete(keys: string[]): void {
+  async delete(keys: string[]): Promise<void> {
     const connection = this.dexie[this.tableName];
-    this.dexie.transaction("rw", connection, async () => {
+    await this.dexie.transaction("rw", connection, async () => {
       connection.where(this.keyName).anyOf(keys).delete();
     });
   }
