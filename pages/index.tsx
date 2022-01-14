@@ -1,20 +1,15 @@
-import { useEffect, useState } from "react";
 import { Box, SimpleGrid } from "@chakra-ui/react";
-
 import Product from "components/product";
-import { productUseCase } from "services/use-cases/";
-import { TProduct } from "services/api/products/types";
+import { useEffect } from "react";
+import { actions, useDispatch, useSelector } from "store";
 
 export default function Home() {
-  const [products, setProducts] = useState<TProduct[]>([]);
+  const dispatch = useDispatch();
+  const products = useSelector((state) => state.products.products);
 
   useEffect(() => {
-    const getProducts = async () => {
-      const response = await productUseCase.getAll();
-      setProducts(response.data);
-    };
-    getProducts();
-  }, []);
+    dispatch(actions.products.fetch());
+  }, [dispatch]);
 
   // useEffect(() => {
   //   const syncProducts = async () => {

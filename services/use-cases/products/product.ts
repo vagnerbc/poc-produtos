@@ -16,7 +16,7 @@ export class ProductUseCase {
   async getAll() {
     const products = await this.productService.getAll();
     this.productRepository.save(products.data);
-    return products;
+    return products.data;
   }
 
   async save(product: any) {
