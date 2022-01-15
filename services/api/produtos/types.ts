@@ -4,6 +4,7 @@ export type TProduto = {
   sku: string;
   name: string;
   status?: TSyncStatus;
+  indexed_id?: string;
 };
 
 export type TProdutoSync = {

@@ -1,6 +1,7 @@
 import { ProdutoService } from "services/api/produtos/produto-service";
 import { TProduto, TSyncStatus } from "services/api/produtos/types";
 import { ProdutoRepository } from "services/repository/produtos/produto-repository";
+import { removeAttributeByKey } from "utils/array";
 export class ProdutoUseCase {
   private produtoService: ProdutoService;
   private produtoRepository: ProdutoRepository;
@@ -49,12 +50,13 @@ export class ProdutoUseCase {
     const updatedProdutos = await this.produtoRepository.getByKey('status', 'updated');
     const deletedProdutos = await this.produtoRepository.getByKey('status', 'deleted');
 
-    const updated = updatedProdutos.map(produto => ({ ...produto, status: undefined, indexed_id: undefined }));
+    const updatedToRepository = removeAttributeByKey<TProduto>(updatedProdutos, 'status');
+    const updated = removeAttributeByKey<TProduto>(updatedToRepository, 'indexed_id');
     const deleted = deletedProdutos.map(produto => produto.sku);
 
     await this.produtoService.sendSync({ updated, deleted });
 
-    await this.produtoRepository.save(updated);
+    await this.produtoRepository.save(updatedToRepository);
     await this.produtoRepository.delete(deleted);
   }
 

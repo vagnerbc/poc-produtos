@@ -1,5 +1,6 @@
 import { Box, SimpleGrid } from "@chakra-ui/react";
 import Produto from "components/produto";
+// import { useSync } from "hooks/useSync";
 import { useEffect } from "react";
 import { actions, useDispatch, useSelector } from "store";
 
@@ -10,6 +11,10 @@ export default function Home() {
   useEffect(() => {
     dispatch(actions.produtos.sync());
   }, [dispatch]);
+
+  // useSync(() => {
+  //   dispatch(actions.produtos.sync())
+  // })
 
   return (
     <Box w="100%" h="100vh" p={4}>
