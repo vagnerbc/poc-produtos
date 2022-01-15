@@ -1,8 +1,4 @@
-import {
-  AnyAction,
-  configureStore,
-  Dispatch as DispatchType,
-} from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import {
   useDispatch as reduxDispatch,
   useSelector as reduxSelector,
@@ -22,10 +18,12 @@ export const store = configureStore({
 
 sagaMiddleware.run(sagas);
 
-export type RootState = ReturnType<typeof store.getState>;
-export type Dispatch = typeof store.dispatch;
+export type TRootState = ReturnType<typeof store.getState>;
+export type TDispatch = typeof store.dispatch;
+export type TDucksNames = keyof TRootState
 
-export const useDispatch = (): DispatchType<AnyAction> =>
-  reduxDispatch<Dispatch>();
-export const useSelector = <R>(selector: (state: RootState) => R) =>
-  reduxSelector<RootState, R>(selector);
+export const useDispatch = (): TDispatch =>
+  reduxDispatch<TDispatch>();
+
+export const useSelector = <R>(selector: (state: TRootState) => R) =>
+  reduxSelector<TRootState, R>(selector);

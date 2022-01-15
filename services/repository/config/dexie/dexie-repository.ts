@@ -1,8 +1,9 @@
 import Dexie from "dexie";
-import { Repository } from "../repository";
+import { TSyncStatus } from "services/api/produtos/types";
+import { Repository, TEntityFilter } from "../repository";
 import { DexieDB } from "./config";
 
-type SaveEntity<T> = T & { indexed_id?: number };
+type TEntity<T> = T & { indexed_id?: number, status?: TSyncStatus };
 
 export class DexieRepository<T> implements Repository<T> {
   private dexie: Dexie = DexieDB.getInstance();
@@ -18,7 +19,7 @@ export class DexieRepository<T> implements Repository<T> {
     const connection = this.dexie[this.tableName];
     await this.dexie.transaction("rw", connection, async () => {
       const keys = entityArray.map((entity) => entity[this.keyName]);
-      const entities: SaveEntity<T>[] = await connection
+      const entities: TEntity<T>[] = await connection
         .where(this.keyName)
         .anyOf(keys)
         .toArray();
@@ -36,12 +37,15 @@ export class DexieRepository<T> implements Repository<T> {
 
   async getAll(): Promise<T[]> {
     const connection = this.dexie[this.tableName];
-    return await connection.toArray();
+    return await connection.filter((entity: TEntity<T>) => !entity.status || entity.status !== 'deleted').toArray();
   }
 
-  async getByKey(key: string, value: any): Promise<T[]> {
+  async getByFilter(filter?: TEntityFilter<T>): Promise<T[]> {
     const connection = this.dexie[this.tableName];
-    return await connection.where(key).equals(value).toArray();
+    if (!filter) {
+      return await this.getAll();
+    }
+    return await connection.where(filter).toArray();
   }
 
   async delete(keys: string[]): Promise<void> {

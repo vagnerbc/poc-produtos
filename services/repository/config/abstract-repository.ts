@@ -1,4 +1,5 @@
 import { Repository } from "./";
+import { TEntityFilter } from "./repository";
 
 export abstract class AbstractRepository<T> {
   private repository: Repository<T>;
@@ -11,8 +12,8 @@ export abstract class AbstractRepository<T> {
     return await this.repository.getAll();
   }
 
-  async getByKey(key: string, value: any) {
-    return await this.repository.getByKey(key, value);
+  async getByFilter(filter?: TEntityFilter<T>): Promise<T[]> {
+    return await this.repository.getByFilter(filter);
   }
 
   async save(entityArray: T[]) {
