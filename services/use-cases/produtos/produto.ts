@@ -37,12 +37,14 @@ export class ProdutoUseCase {
     const reference = localStorage.getItem("produto_last_sync");
     const { data } = await this.produtoService.getSync(reference);
 
+    localStorage.setItem("produto_last_sync", data.last_sync);
+
+    if (data.updated.length === 0 && data.deleted.length === 0) return;
+
     await this.produtoRepository.save(data.updated);
     await this.produtoRepository.delete(data.deleted);
 
     const produtos = await this.produtoRepository.getAll();
-
-    localStorage.setItem("produto_last_sync", data.last_sync);
 
     return produtos;
   }
@@ -51,16 +53,16 @@ export class ProdutoUseCase {
     const updatedProdutos = await this.getByFilter({ status: 'updated' });
     const deletedProdutos = await this.getByFilter({ status: 'deleted' });
 
+    if (updatedProdutos.length === 0 && deletedProdutos.length === 0) return;
+
     const updatedToRepository = removeAttributeByKey<TProduto>(updatedProdutos, 'status');
     const updated = removeAttributeByKey<TProduto>(updatedToRepository, 'indexed_id');
     const deleted = deletedProdutos.map(produto => produto.sku);
 
-    if (updated.length > 0 || deleted.length > 0) {
-      await this.produtoService.sendSync({ updated, deleted });
+    await this.produtoService.sendSync({ updated, deleted });
 
-      await this.produtoRepository.save(updatedToRepository);
-      await this.produtoRepository.delete(deleted);
-    }
+    await this.produtoRepository.save(updatedToRepository);
+    await this.produtoRepository.delete(deleted);
   }
 
   async sync(): Promise<TProduto[]> {

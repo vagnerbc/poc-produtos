@@ -17,6 +17,13 @@ const customTheme = extendTheme({
     Button: {
       variants: {
         ...theme.components.Button.variants,
+        save: {
+          bg: 'primary',
+          color: 'white',
+          _hover: {
+            opacity: 0.8,
+          }
+        },
         delete: {
           bg: 'warning',
           color: 'white',
