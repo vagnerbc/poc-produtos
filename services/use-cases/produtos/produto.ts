@@ -1,8 +1,8 @@
-import { ProdutoService } from "services/api/produtos/produto-service";
-import { TProduto, TSyncStatus } from "services/api/produtos/types";
-import { TEntityFilter } from "services/repository/config/repository";
-import { ProdutoRepository } from "services/repository/produtos/produto-repository";
-import { removeAttributeByKey } from "utils/array";
+import { ProdutoService } from 'services/api/produtos/produto-service';
+import { TProduto, TSyncStatus } from 'services/api/produtos/types';
+import { TEntityFilter } from 'services/repository/config/repository';
+import { ProdutoRepository } from 'services/repository/produtos/produto-repository';
+import { removeAttributeByKey } from 'utils/array';
 export class ProdutoUseCase {
   private produtoService: ProdutoService;
   private produtoRepository: ProdutoRepository;
@@ -20,7 +20,7 @@ export class ProdutoUseCase {
   }
 
   async changeStatus(produto: TProduto, status: TSyncStatus) {
-    await this.produtoRepository.save([{...produto, status}]);
+    await this.produtoRepository.save([{ ...produto, status }]);
   }
 
   async update(produto: TProduto) {
@@ -34,10 +34,10 @@ export class ProdutoUseCase {
   }
 
   async getSync(): Promise<TProduto[]> {
-    const reference = localStorage.getItem("produto_last_sync");
+    const reference = localStorage.getItem('produto_last_sync');
     const { data } = await this.produtoService.getSync(reference);
 
-    localStorage.setItem("produto_last_sync", data.last_sync);
+    localStorage.setItem('produto_last_sync', data.last_sync);
 
     if (data.updated.length === 0 && data.deleted.length === 0) return;
 
@@ -55,9 +55,15 @@ export class ProdutoUseCase {
 
     if (updatedProdutos.length === 0 && deletedProdutos.length === 0) return;
 
-    const updatedToRepository = removeAttributeByKey<TProduto>(updatedProdutos, 'status');
-    const updated = removeAttributeByKey<TProduto>(updatedToRepository, 'indexed_id');
-    const deleted = deletedProdutos.map(produto => produto.sku);
+    const updatedToRepository = removeAttributeByKey<TProduto>(
+      updatedProdutos,
+      'status'
+    );
+    const updated = removeAttributeByKey<TProduto>(
+      updatedToRepository,
+      'indexed_id'
+    );
+    const deleted = deletedProdutos.map((produto) => produto.sku);
 
     await this.produtoService.sendSync({ updated, deleted });
 

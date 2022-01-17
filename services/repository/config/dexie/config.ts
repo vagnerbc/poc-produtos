@@ -1,9 +1,9 @@
-import Dexie from "dexie";
+import Dexie from 'dexie';
 
 const version = 1;
 
 const schema = {
-  produtos: "++indexed_id, sku, name, status",
+  produtos: '++indexed_id, sku, name, status'
 };
 
 export class DexieDB {
@@ -11,7 +11,7 @@ export class DexieDB {
 
   static getInstance(): Dexie {
     if (!this.dexie) {
-      this.dexie = new Dexie("offline_db");
+      this.dexie = new Dexie('offline_db');
       this.dexie.version(version).stores(schema);
     }
     return this.dexie;

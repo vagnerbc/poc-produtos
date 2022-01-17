@@ -1,5 +1,5 @@
-import { all } from "redux-saga/effects";
-import * as produtosDuck from "./produtos";
+import { all } from 'redux-saga/effects';
+import * as produtosDuck from './produtos';
 
 export type State = {
   produtos: produtosDuck.State;

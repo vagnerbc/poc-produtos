@@ -1,7 +1,7 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { TProduto } from "services/api/produtos/types";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { TProduto } from 'services/api/produtos/types';
 
-type TStatus = "pristine" | "loading" | "success" | "failure";
+type TStatus = 'pristine' | 'loading' | 'success' | 'failure';
 
 const offset = 8;
 
@@ -14,21 +14,21 @@ export type State = {
 
 const initialState: State = {
   produtos: [],
-  syncStatus: "pristine",
+  syncStatus: 'pristine',
   offset,
-  term: '',
+  term: ''
 };
 
 const reducers = {
   sync: (state: State) => {
-    state.syncStatus = "loading";
+    state.syncStatus = 'loading';
   },
   syncSuccess: (state: State, action: PayloadAction<TProduto[]>) => {
     state.produtos = action.payload;
-    state.syncStatus = "success";
+    state.syncStatus = 'success';
   },
   syncFailure: (state: State) => {
-    state.syncStatus = "failure";
+    state.syncStatus = 'failure';
   },
   setOffset: (state: State) => {
     state.offset += offset;
@@ -39,9 +39,9 @@ const reducers = {
 };
 
 const produtos = createSlice({
-  name: "produtos",
+  name: 'produtos',
   initialState,
-  reducers,
+  reducers
 });
 
 export const actions = produtos.actions;

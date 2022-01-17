@@ -1,7 +1,7 @@
-import { call, put, takeLatest } from "redux-saga/effects";
-import { TProduto } from "services/api/produtos/types";
-import { produtoUseCase } from "services/use-cases";
-import { actions } from "./slice";
+import { call, put, takeLatest } from 'redux-saga/effects';
+import { TProduto } from 'services/api/produtos/types';
+import { produtoUseCase } from 'services/use-cases';
+import { actions } from './slice';
 
 export const sagas = [takeLatest(actions.sync.type, syncSaga)];
 

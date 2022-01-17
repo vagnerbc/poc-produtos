@@ -1,8 +1,14 @@
-import { useCallback, useState, useEffect } from 'react'
-import { DeleteIcon } from '@chakra-ui/icons'
-import { Center, Button, Input, Flex, Text, IconButton } from "components/atoms";
-import React from "react";
-import { TProduto } from "services/api/produtos/types";
+import { useCallback, useState, useEffect } from 'react';
+import { DeleteIcon } from '@chakra-ui/icons';
+import {
+  Center,
+  Button,
+  Input,
+  Flex,
+  Text,
+  IconButton
+} from 'components/atoms';
+import { TProduto } from 'services/api/produtos/types';
 import { produtoUseCase } from 'services/use-cases';
 
 type Props = {
@@ -14,7 +20,7 @@ const Produto = ({ produto }: Props) => {
 
   useEffect(() => {
     setName(produto.name);
-  }, [produto.name])
+  }, [produto.name]);
 
   const handleRemove = useCallback(() => {
     produtoUseCase.delete(produto);
@@ -27,7 +33,9 @@ const Produto = ({ produto }: Props) => {
   return (
     <Center bg="background" h="180px" w="100%" shadow="lg" borderRadius={6}>
       <Flex direction="column">
-        <Text fontWeight="bold" color="secondary">{produto.name} - {produto.sku}</Text>
+        <Text fontWeight="bold" color="secondary">
+          {produto.name} - {produto.sku}
+        </Text>
         <Input
           placeholder="Novo nome do produto"
           value={name}
@@ -35,11 +43,17 @@ const Produto = ({ produto }: Props) => {
           variant="primary"
           onChange={(e) => setName(e.target.value)}
         />
-        <Flex direction="row" alignItems="center" justifyContent="space-between">
-          <Button variant="save" onClick={handleSave}>Salvar</Button>
+        <Flex
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <Button variant="save" onClick={handleSave}>
+            Salvar
+          </Button>
           <IconButton
-            variant='delete'
-            aria-label='delete'
+            variant="delete"
+            aria-label="delete"
             icon={<DeleteIcon />}
             onClick={handleRemove}
           />

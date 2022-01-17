@@ -1,1 +1,1 @@
-export { DexieRepository as Repository } from "./dexie/dexie-repository";
+export { DexieRepository as Repository } from './dexie/dexie-repository';

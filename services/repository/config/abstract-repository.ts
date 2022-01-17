@@ -1,5 +1,5 @@
-import { Repository } from "./";
-import { TEntityFilter } from "./repository";
+import { Repository } from './';
+import { TEntityFilter } from './repository';
 
 export abstract class AbstractRepository<T> {
   private repository: Repository<T>;

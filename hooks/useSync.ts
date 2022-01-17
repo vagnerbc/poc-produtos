@@ -1,5 +1,5 @@
 import { useEffect, useCallback, useRef } from 'react';
-import { TDucksNames, store, actions } from 'store'
+import { TDucksNames, store, actions } from 'store';
 
 export const useSync = (ducks: TDucksNames[], interval = 30 * 1000) => {
   const intervalRef = useRef<boolean>(false);
@@ -8,13 +8,12 @@ export const useSync = (ducks: TDucksNames[], interval = 30 * 1000) => {
     if (!window.navigator.onLine) {
       console.warn('Sem conexão com a internet');
       return;
-    };
+    }
 
-    ducks.forEach(duck => {
+    ducks.forEach((duck) => {
       if (!actions[duck].sync) return;
-      console.warn('chamou o sync', duck);
       store.dispatch(actions[duck].sync());
-    })
+    });
   }, [ducks]);
 
   useEffect(() => {
@@ -25,4 +24,4 @@ export const useSync = (ducks: TDucksNames[], interval = 30 * 1000) => {
     const intervalHash = setInterval(sync, interval);
     return () => clearInterval(intervalHash);
   }, [sync, interval]);
-}
+};

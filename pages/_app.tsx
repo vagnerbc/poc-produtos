@@ -1,15 +1,24 @@
-import { AppProps } from "next/app";
-import { ChakraProvider } from "components/atoms";
-import customTheme from "styles/customTheme";
-import { store } from "store";
-import { Provider } from "react-redux";
+import dynamic from 'next/dynamic';
+import { AppProps } from 'next/app';
+import { store } from 'store';
+import { Provider as ReduxProvider } from 'react-redux';
+import { getThemeWithColor } from 'styles/customTheme';
+import { ChakraProvider } from 'components/atoms';
 
-export default function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps }: AppProps) {
+  // eslint-disable-next-line no-constant-condition
+  const accentColor = !true ? 'primary' : 'secondary';
+  const theme = getThemeWithColor(accentColor);
+
   return (
-    <Provider store={store}>
-      <ChakraProvider theme={customTheme} resetCSS>
+    <ReduxProvider store={store}>
+      <ChakraProvider theme={theme} resetCSS>
         <Component {...pageProps} />
       </ChakraProvider>
-    </Provider>
+    </ReduxProvider>
   );
 }
+
+export default dynamic(() => Promise.resolve(MyApp), {
+  ssr: false
+});

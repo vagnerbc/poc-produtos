@@ -1,11 +1,9 @@
-import { AxiosInstance } from "axios";
+import { AxiosInstance } from 'axios';
 
 export abstract class AbstractService<T> {
-  constructor(
-    protected api: AxiosInstance,
-    protected entity: string,
-    protected endpoint: string
-  ) {}
+  protected api: AxiosInstance;
+  protected entity: string;
+  protected endpoint: string;
 
   async getAll() {
     return this.api.get(`${this.endpoint}`);
@@ -17,7 +15,7 @@ export abstract class AbstractService<T> {
 
   async update(entityArray: T[]) {
     return this.api.put(`${this.endpoint}`, {
-      data: { [this.entity]: entityArray },
+      data: { [this.entity]: entityArray }
     });
   }
 
