@@ -4,25 +4,34 @@ const sync = (req: NextApiRequest, res: NextApiResponse) => {
   const { reference } = req.query;
 
   const produtos = [
-    { name: "Leite", sku: "1234567890" },
-    { name: "Cafe", sku: "1234567891" },
-    { name: "Chocolate", sku: "1234567892" },
-    { name: "Bombom", sku: "1234567893" },
-    { name: "Bis", sku: "1234567894" },
-    { name: "Cerveja", sku: "1234567895" },
-    { name: "Bombril", sku: "1234567896" },
-    { name: "Amaciante", sku: "1234567897" },
+    { name: "Leite", sku: "1" },
+    { name: "Cafe", sku: "2" },
+    { name: "Chocolate", sku: "3" },
+    { name: "Bombom", sku: "4" },
+    { name: "Bis", sku: "5" },
+    { name: "Cerveja", sku: "6" },
+    { name: "Bombril", sku: "7" },
+    { name: "Amaciante", sku: "8" },
+    { name: "Leite", sku: "9" },
+    { name: "Cafe", sku: "10" },
+    { name: "Chocolate", sku: "11" },
+    { name: "Bombom", sku: "12" },
+    { name: "Bis", sku: "13" },
+    { name: "Cerveja", sku: "14" },
+    { name: "Bombril", sku: "15" },
+    { name: "Amaciante", sku: "16" },
+    
   ];
 
   const updatedProdutos = [
-    { name: "Leite updated", sku: "1234567890" },
-    { name: "Cafe updated", sku: "1234567891" },
-    { name: "Pipoca", sku: "123232" },
+    { name: "Leite updated", sku: "1" },
+    { name: "Cafe updated", sku: "2" },
+    { name: "Pipoca", sku: "17" },
   ];
 
   const data = {
     updated: reference ? updatedProdutos : produtos,
-    deleted: reference ? ["1234567897", "1234567895"] : [],
+    deleted: reference ? ["14", "15"] : [],
     last_sync: new Date().toISOString(),
   };
 

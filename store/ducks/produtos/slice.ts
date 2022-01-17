@@ -3,14 +3,20 @@ import { TProduto } from "services/api/produtos/types";
 
 type TStatus = "pristine" | "loading" | "success" | "failure";
 
+const offset = 8;
+
 export type State = {
   produtos: TProduto[];
   syncStatus: TStatus;
+  offset: number;
+  term: string;
 };
 
 const initialState: State = {
   produtos: [],
   syncStatus: "pristine",
+  offset,
+  term: '',
 };
 
 const reducers = {
@@ -24,6 +30,12 @@ const reducers = {
   syncFailure: (state: State) => {
     state.syncStatus = "failure";
   },
+  setOffset: (state: State) => {
+    state.offset += offset;
+  },
+  setTerm: (state: State, action: PayloadAction<string>) => {
+    state.term = action.payload;
+  }
 };
 
 const produtos = createSlice({
