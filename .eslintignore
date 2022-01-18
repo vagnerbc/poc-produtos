@@ -1,13 +1,16 @@
 node_modules
 dist
+out
 .favorites.json
 coverage
 webpack.config.ts
+public/*.js
 
 \.vscode/
 .idea
 babel.config.js
 metro.config.js
+next.config.js
 reactotron.js
 *.spec.js
 *.min.js
