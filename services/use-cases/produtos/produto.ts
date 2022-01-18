@@ -33,13 +33,17 @@ export class ProdutoUseCase {
   }
 
   async getSync(): Promise<TProduto[]> {
-    const reference = localStorage.getItem('produto_last_sync')
-    const { data } = await this.produtoService.getSync(reference)
+    try {
+      const reference = localStorage.getItem('produto_last_sync')
+      const { data } = await this.produtoService.getSync(reference)
 
-    localStorage.setItem('produto_last_sync', data.last_sync)
+      localStorage.setItem('produto_last_sync', data.last_sync)
 
-    await this.produtoRepository.save(data.updated)
-    await this.produtoRepository.delete(data.deleted)
+      await this.produtoRepository.save(data.updated)
+      await this.produtoRepository.delete(data.deleted)
+    } catch (error) {
+      console.warn('Serviço de sync offline')
+    }
 
     const produtos = await this.produtoRepository.getAll()
 
@@ -47,29 +51,33 @@ export class ProdutoUseCase {
   }
 
   async sendSync(): Promise<void> {
-    const updatedProdutos = await this.getByFilter({ status: 'updated' })
-    const deletedProdutos = await this.getByFilter({ status: 'deleted' })
+    try {
+      const updatedProdutos = await this.getByFilter({ status: 'updated' })
+      const deletedProdutos = await this.getByFilter({ status: 'deleted' })
 
-    if (updatedProdutos.length === 0 && deletedProdutos.length === 0) return
+      if (updatedProdutos.length === 0 && deletedProdutos.length === 0) return
 
-    const updatedToRepository = removeAttributeByKey<TProduto>(
-      updatedProdutos,
-      'status'
-    )
-    const updated = removeAttributeByKey<TProduto>(
-      updatedToRepository,
-      'indexed_id'
-    )
-    const deleted = deletedProdutos.map((produto) => produto.sku)
+      const updatedToRepository = removeAttributeByKey<TProduto>(
+        updatedProdutos,
+        'status'
+      )
+      const updated = removeAttributeByKey<TProduto>(
+        updatedToRepository,
+        'indexed_id'
+      )
+      const deleted = deletedProdutos.map((produto) => produto.sku)
 
-    await this.produtoService.sendSync({ updated, deleted })
+      await this.produtoService.sendSync({ updated, deleted })
 
-    await this.produtoRepository.save(updatedToRepository)
-    await this.produtoRepository.delete(deleted)
+      await this.produtoRepository.save(updatedToRepository)
+      await this.produtoRepository.delete(deleted)
+    } catch (error) {
+      console.warn('Serviço de sync offline')
+    }
   }
 
   async sync(): Promise<TProduto[]> {
-    // await this.sendSync()
+    await this.sendSync()
     const produtos = await this.getSync()
     return produtos
   }
