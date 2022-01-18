@@ -1,34 +1,27 @@
-import { useCallback, useState, useEffect } from 'react';
-import { DeleteIcon } from '@chakra-ui/icons';
-import {
-  Center,
-  Button,
-  Input,
-  Flex,
-  Text,
-  IconButton
-} from 'components/atoms';
-import { TProduto } from 'services/api/produtos/types';
-import { produtoUseCase } from 'services/use-cases';
+import { useCallback, useState, useEffect } from 'react'
+import { DeleteIcon } from '@chakra-ui/icons'
+import { Center, Button, Input, Flex, Text, IconButton } from 'components/atoms'
+import { TProduto } from 'services/api/produtos/types'
+import { produtoUseCase } from 'services/use-cases'
 
 type Props = {
-  produto: TProduto;
-};
+  produto: TProduto
+}
 
 const Produto = ({ produto }: Props) => {
-  const [name, setName] = useState('');
+  const [name, setName] = useState('')
 
   useEffect(() => {
-    setName(produto.name);
-  }, [produto.name]);
+    setName(produto.name)
+  }, [produto.name])
 
   const handleRemove = useCallback(() => {
-    produtoUseCase.delete(produto);
-  }, [produto]);
+    produtoUseCase.delete(produto)
+  }, [produto])
 
   const handleSave = useCallback(() => {
-    produtoUseCase.update({ ...produto, name });
-  }, [name, produto]);
+    produtoUseCase.update({ ...produto, name })
+  }, [name, produto])
 
   return (
     <Center bg="background" h="180px" w="100%" shadow="lg" borderRadius={6}>
@@ -60,7 +53,7 @@ const Produto = ({ produto }: Props) => {
         </Flex>
       </Flex>
     </Center>
-  );
-};
+  )
+}
 
-export default Produto;
+export default Produto

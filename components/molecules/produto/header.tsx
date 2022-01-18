@@ -12,11 +12,11 @@ import {
   MenuList,
   Stack,
   useBreakpointValue
-} from 'components/atoms';
-import Search from './search';
+} from 'components/atoms'
+import Search from './search'
 
 const Header = () => {
-  const logo = useBreakpointValue({ base: 'yh', sm: 'yh', md: 'yandeh' });
+  const logo = useBreakpointValue({ base: 'yh', sm: 'yh', md: 'yandeh' })
 
   return (
     <>
@@ -65,7 +65,7 @@ const Header = () => {
         </Flex>
       </Box>
     </>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

@@ -1,13 +1,13 @@
-import { Input } from 'components/atoms';
-import { useDispatch, actions, useSelector } from 'store';
+import { Input } from 'components/atoms'
+import { useDispatch, actions, useSelector } from 'store'
 
 const Search = () => {
-  const term = useSelector((state) => state.produtos.term);
-  const dispatch = useDispatch();
+  const term = useSelector((state) => state.produtos.term)
+  const dispatch = useDispatch()
 
   const handleSearch = (term) => {
-    dispatch(actions.produtos.setTerm(term));
-  };
+    dispatch(actions.produtos.setTerm(term))
+  }
 
   return (
     <Input
@@ -18,7 +18,7 @@ const Search = () => {
       placeholder="buscar produtos"
       variant="primary"
     />
-  );
-};
+  )
+}
 
-export default Search;
+export default Search

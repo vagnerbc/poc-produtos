@@ -1,10 +1,10 @@
-import { theme, extendTheme } from '@chakra-ui/react';
+import { theme, extendTheme } from '@chakra-ui/react'
 
-type TAccentColorKeys = 'primary' | 'secondary';
+type TAccentColorKeys = 'primary' | 'secondary'
 
 const getCustomTheme = (colorKey: TAccentColorKeys) => {
-  const primary = colorKey === 'primary' ? '#E85A00' : '#2E2867';
-  const secondary = colorKey === 'primary' ? '#2E2867' : '#E85A00';
+  const primary = colorKey === 'primary' ? '#E85A00' : '#2E2867'
+  const secondary = colorKey === 'primary' ? '#2E2867' : '#E85A00'
 
   return extendTheme({
     fonts: {
@@ -71,11 +71,11 @@ const getCustomTheme = (colorKey: TAccentColorKeys) => {
         }
       }
     }
-  });
-};
+  })
+}
 
-export default getCustomTheme('primary');
+export default getCustomTheme('primary')
 
 export const getThemeWithColor = (colorKey: TAccentColorKeys = 'primary') => {
-  return getCustomTheme(colorKey);
-};
+  return getCustomTheme(colorKey)
+}
