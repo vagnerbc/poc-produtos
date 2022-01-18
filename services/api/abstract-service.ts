@@ -5,6 +5,12 @@ export abstract class AbstractService<T> {
   protected entity: string
   protected endpoint: string
 
+  constructor(api: AxiosInstance, entity: string, endpoint: string) {
+    this.api = api
+    this.entity = entity
+    this.endpoint = endpoint
+  }
+
   async getAll() {
     return this.api.get(`${this.endpoint}`)
   }
