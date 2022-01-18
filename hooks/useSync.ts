@@ -1,7 +1,7 @@
 import { useEffect, useCallback, useRef } from 'react'
 import { TDucksNames, store, actions } from 'store'
 
-export const useSync = (ducks: TDucksNames[], interval = 30 * 1000) => {
+export const useSync = (ducks: TDucksNames[], interval = 60 * 2000) => {
   const intervalRef = useRef<boolean>(false)
 
   const sync = useCallback(() => {

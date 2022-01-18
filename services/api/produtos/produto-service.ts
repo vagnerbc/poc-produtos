@@ -9,7 +9,7 @@ export class ProdutoService extends AbstractService<TProduto> {
 
   async getSync(reference?: string) {
     const query = reference ? `?reference=${reference}` : ''
-    return this.api.get(`/produtos-sync${query}`)
+    return this.api.get(`/sync${query}`)
   }
 
   async sendSync(changed: TProdutoSync) {

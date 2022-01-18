@@ -2,11 +2,11 @@ import { Input } from 'components/atoms'
 import { useDispatch, actions, useSelector } from 'store'
 
 const Search = () => {
-  const term = useSelector((state) => state.produtos.term)
   const dispatch = useDispatch()
+  const term = useSelector((state) => state.produtos.term)
 
-  const handleSearch = (term) => {
-    dispatch(actions.produtos.setTerm(term))
+  const handleSearch = (text: string) => {
+    dispatch(actions.produtos.setTerm(text))
   }
 
   return (
@@ -15,7 +15,7 @@ const Search = () => {
       value={term}
       maxWidth="800px"
       mx={8}
-      placeholder="buscar produtos"
+      placeholder="Buscar produtos"
       variant="primary"
     />
   )

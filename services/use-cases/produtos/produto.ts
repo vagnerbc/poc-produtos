@@ -27,10 +27,9 @@ export class ProdutoUseCase {
     await this.changeStatus(produto, 'updated')
   }
 
-  async delete(produto: TProduto) {
+  async delete(sku: string) {
+    const [produto] = await this.getByFilter({ sku })
     await this.changeStatus(produto, 'deleted')
-    const produtos = await this.produtoRepository.getAll()
-    return produtos
   }
 
   async getSync(): Promise<TProduto[]> {
@@ -38,8 +37,6 @@ export class ProdutoUseCase {
     const { data } = await this.produtoService.getSync(reference)
 
     localStorage.setItem('produto_last_sync', data.last_sync)
-
-    if (data.updated.length === 0 && data.deleted.length === 0) return
 
     await this.produtoRepository.save(data.updated)
     await this.produtoRepository.delete(data.deleted)
@@ -72,7 +69,7 @@ export class ProdutoUseCase {
   }
 
   async sync(): Promise<TProduto[]> {
-    await this.sendSync()
+    // await this.sendSync()
     const produtos = await this.getSync()
     return produtos
   }

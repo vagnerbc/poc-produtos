@@ -1,19 +1,40 @@
-import { Box, SimpleGrid, Spinner, Flex } from 'components/atoms'
+import {
+  Box,
+  SimpleGrid,
+  Spinner,
+  Flex,
+  useBreakpointValue
+} from 'components/atoms'
 import CardProduto from 'components/molecules/produto/card'
 import { useSync } from 'hooks/useSync'
 import { useSelector, selectors, store, actions } from 'store'
 import useInfiniteScroll from 'react-infinite-scroll-hook'
-import { useCallback } from 'react'
+import { useCallback, useEffect } from 'react'
 import Header from 'components/molecules/produto/header'
 
 export default function Home() {
   useSync(['produtos'])
+  const scrollMargin = useBreakpointValue({
+    base: '400px',
+    sm: '400px',
+    md: '300px'
+  })
+  const offsetCount = useBreakpointValue({
+    base: 8,
+    sm: 8,
+    lg: 12,
+    xl: 16
+  })
+
+  useEffect(() => {
+    store.dispatch(actions.produtos.setOffsetCount(offsetCount))
+  }, [offsetCount])
+
+  const produtos = useSelector(selectors.produtos.getProdutos)
+  const hasNextPage = useSelector(selectors.produtos.getHasNextPage)
 
   const loading = useSelector(
     (state) => state.produtos.syncStatus === 'loading'
-  )
-  const hasNextPage = useSelector(
-    (state) => state.produtos.produtos.length > state.produtos.offset
   )
 
   const loadMore = useCallback(() => {
@@ -24,10 +45,9 @@ export default function Home() {
     loading,
     hasNextPage,
     onLoadMore: loadMore,
-    rootMargin: '0px 0px 400px 0px'
+    rootMargin: `0px 0px ${scrollMargin} 0px`,
+    delayInMs: 400
   })
-
-  const produtos = useSelector(selectors.produtos.getProdutos)
 
   return (
     <Box w="100%" h="100vh">
@@ -42,8 +62,14 @@ export default function Home() {
         ))}
       </SimpleGrid>
       {(loading || hasNextPage) && (
-        <Flex pt={4} direction="row" justifyContent="center" ref={sentryRef}>
-          <Spinner />
+        <Flex
+          pt={4}
+          pb={6}
+          direction="row"
+          justifyContent="center"
+          ref={sentryRef}
+        >
+          <Spinner color="primary" />
         </Flex>
       )}
     </Box>
