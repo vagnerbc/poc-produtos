@@ -7,7 +7,8 @@ import { actions } from './slice'
 export const sagas = [
   takeLatest(actions.sync.type, syncSaga),
   takeLatest(actions.delete.type, deleteSaga),
-  takeLatest(actions.update.type, updateSaga)
+  takeLatest(actions.update.type, updateSaga),
+  takeLatest(actions.countChanges.type, countChangesSaga)
 ]
 
 function* syncSaga() {
@@ -37,5 +38,14 @@ function* updateSaga(action: PayloadAction<TProduto>) {
   } catch (error) {
     console.warn(error)
     yield put(actions.updateFailure())
+  }
+}
+
+function* countChangesSaga() {
+  try {
+    const count: number = yield call(() => produtoUseCase.countChanges())
+    yield put(actions.setCountChanges(count))
+  } catch (error) {
+    console.warn(error)
   }
 }

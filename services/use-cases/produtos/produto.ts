@@ -50,10 +50,25 @@ export class ProdutoUseCase {
     return produtos
   }
 
+  private async _getChanges(): Promise<{
+    updatedProdutos: TProduto[]
+    deletedProdutos: TProduto[]
+  }> {
+    const updatedProdutos = await this.getByFilter({ status: 'updated' })
+    const deletedProdutos = await this.getByFilter({ status: 'deleted' })
+
+    return { updatedProdutos, deletedProdutos }
+  }
+
+  async countChanges(): Promise<number> {
+    const { updatedProdutos, deletedProdutos } = await this._getChanges()
+
+    return updatedProdutos.length + deletedProdutos.length
+  }
+
   async sendSync(): Promise<void> {
     try {
-      const updatedProdutos = await this.getByFilter({ status: 'updated' })
-      const deletedProdutos = await this.getByFilter({ status: 'deleted' })
+      const { updatedProdutos, deletedProdutos } = await this._getChanges()
 
       if (updatedProdutos.length === 0 && deletedProdutos.length === 0) return
 

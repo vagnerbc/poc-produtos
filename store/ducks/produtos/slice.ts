@@ -13,6 +13,7 @@ export type State = {
   loadingMap: string[]
   offset: number
   term: string
+  countChanges: number
 }
 
 const initialState: State = {
@@ -23,7 +24,8 @@ const initialState: State = {
   loadingMap: [],
   offsetCount: 8,
   offset: 0,
-  term: ''
+  term: '',
+  countChanges: 0
 }
 
 const reducers = {
@@ -33,6 +35,7 @@ const reducers = {
   syncSuccess: (state: State, action: PayloadAction<TProduto[]>) => {
     state.produtos = action.payload
     state.syncStatus = 'success'
+    state.countChanges = 0
   },
   syncFailure: (state: State) => {
     state.syncStatus = 'failure'
@@ -50,6 +53,7 @@ const reducers = {
     const newLoadingMap = [...state.loadingMap]
     newLoadingMap.splice(state.loadingMap.indexOf(action.payload), 1)
     state.loadingMap = newLoadingMap
+    state.countChanges = state.countChanges++
   },
   deleteFailure: (state: State) => {
     state.deleteStatus = 'failure'
@@ -70,6 +74,7 @@ const reducers = {
     const newLoadingMap = [...state.loadingMap]
     newLoadingMap.splice(state.loadingMap.indexOf(action.payload.sku), 1)
     state.loadingMap = newLoadingMap
+    state.countChanges = state.countChanges++
   },
   updateFailure: (state: State) => {
     state.updateStatus = 'failure'
@@ -83,6 +88,11 @@ const reducers = {
   },
   setTerm: (state: State, action: PayloadAction<string>) => {
     state.term = action.payload
+  },
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  countChanges: () => {},
+  setCountChanges: (state: State, actions: PayloadAction<number>) => {
+    state.countChanges = actions.payload
   }
 }
 

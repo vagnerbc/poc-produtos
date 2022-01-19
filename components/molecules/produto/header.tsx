@@ -13,6 +13,7 @@ import {
   Stack,
   useBreakpointValue
 } from 'components/atoms'
+import Changes from './changes'
 import Search from './search'
 
 const Header = () => {
@@ -27,6 +28,9 @@ const Header = () => {
           </Text>
           <Search />
           <Flex alignItems={'center'}>
+            <Stack direction={'row'}>
+              <Changes />
+            </Stack>
             <Stack direction={'row'} spacing={7}>
               <Menu>
                 <MenuButton

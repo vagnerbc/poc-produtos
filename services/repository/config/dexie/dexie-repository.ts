@@ -31,7 +31,7 @@ export class DexieRepository<T> implements Repository<T> {
         ...entity,
         indexed_id: idsMap.get(entity[this.keyName])
       }))
-      connection.bulkPut(entitiesToSave)
+      await connection.bulkPut(entitiesToSave)
     })
   }
 
@@ -55,7 +55,7 @@ export class DexieRepository<T> implements Repository<T> {
   async delete(keys: string[]): Promise<void> {
     const connection = this.dexie[this.tableName]
     await this.dexie.transaction('rw', connection, async () => {
-      connection.where(this.keyName).anyOf(keys).delete()
+      await connection.where(this.keyName).anyOf(keys).delete()
     })
   }
 }
