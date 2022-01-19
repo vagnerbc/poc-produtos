@@ -28,7 +28,7 @@ const Header = () => {
           </Text>
           <Search />
           <Flex alignItems={'center'}>
-            <Stack direction={'row'} paddingRight={2}>
+            <Stack direction={'row'} paddingRight={3}>
               <Changes />
             </Stack>
             <Stack direction={'row'} spacing={7}>

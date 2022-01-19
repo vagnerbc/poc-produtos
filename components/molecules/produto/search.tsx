@@ -14,7 +14,8 @@ const Search = () => {
       onChange={(e) => handleSearch(e.target.value)}
       value={term}
       maxWidth="800px"
-      mx={4}
+      marginLeft={4}
+      marginRight={3}
       placeholder="Buscar produtos"
       variant="primary"
     />
