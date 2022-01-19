@@ -1,0 +1,6 @@
+tsconfig.json
+next.config.js
+
+dist
+public
+out

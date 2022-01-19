@@ -1,3 +1,4 @@
+import { useCallback, useEffect } from 'react'
 import {
   Box,
   SimpleGrid,
@@ -9,10 +10,9 @@ import CardProduto from 'components/molecules/produto/card'
 import { useSync } from 'hooks/useSync'
 import { useSelector, selectors, store, actions } from 'store'
 import useInfiniteScroll from 'react-infinite-scroll-hook'
-import { useCallback, useEffect } from 'react'
 import Header from 'components/molecules/produto/header'
 
-export default function Home() {
+function Home() {
   useSync(['produtos'])
   const scrollMargin = useBreakpointValue({
     base: '400px',
@@ -30,7 +30,7 @@ export default function Home() {
     store.dispatch(actions.produtos.setOffsetCount(offsetCount))
   }, [offsetCount])
 
-  const produtos = useSelector(selectors.produtos.getProdutos)
+  const produtos = useSelector(selectors.produtos.getPaginatedProdutos)
   const hasNextPage = useSelector(selectors.produtos.getHasNextPage)
 
   const loading = useSelector(
@@ -75,3 +75,5 @@ export default function Home() {
     </Box>
   )
 }
+
+export default Home

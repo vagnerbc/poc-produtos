@@ -12,6 +12,7 @@ babel.config.js
 metro.config.js
 next.config.js
 reactotron.js
+tsconfig.json
 *.spec.js
 *.min.js
 build

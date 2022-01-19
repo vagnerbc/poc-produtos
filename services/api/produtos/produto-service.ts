@@ -13,8 +13,6 @@ export class ProdutoService extends AbstractService<TProduto> {
   }
 
   async sendSync(changed: TProdutoSync) {
-    return this.api.post(`/produtos-sync`, {
-      data: changed
-    })
+    return this.api.post(`/sync`, changed)
   }
 }

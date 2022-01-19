@@ -1,18 +1,30 @@
+import { CircularProgress, CircularProgressLabel, Box } from 'components/atoms'
 import { useChanges } from 'hooks/useChanges'
-import { useNetwork } from 'hooks/useNetwork'
 import { useSelector } from 'store'
 
 const Changes = () => {
-  const isOnline = useNetwork()
   useChanges(['produtos'])
 
+  const isSyncing = useSelector(
+    (state) => state.produtos.syncStatus === 'loading'
+  )
   const count = useSelector((state) => state.produtos.countChanges)
 
   return (
-    <div>
-      {!isOnline && <span>offline</span>}
-      <span>{count}</span>
-    </div>
+    <Box width="32px" height="32px">
+      {!count ? null : (
+        <CircularProgress
+          isIndeterminate={isSyncing}
+          color="secondary"
+          size="32px"
+          thickness="8px"
+        >
+          <CircularProgressLabel color="white" fontSize="12px">
+            {count}
+          </CircularProgressLabel>
+        </CircularProgress>
+      )}
+    </Box>
   )
 }
 

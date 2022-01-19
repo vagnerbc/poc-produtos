@@ -36,7 +36,7 @@ const Produto = ({ produto }: Props) => {
       p={6}
     >
       <Flex direction="column" width="100%">
-        <Text fontWeight="bold" color="secondary" noOfLines={2}>
+        <Text fontWeight="bold" color="secondary" noOfLines={2} h="48px">
           {produto.name} - {produto.sku}
         </Text>
         <Input
