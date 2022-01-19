@@ -1,8 +1,9 @@
-import { useCallback, useState, useEffect } from 'react'
+import { useCallback, useState, useEffect, memo } from 'react'
 import { DeleteIcon } from '@chakra-ui/icons'
 import { Center, Button, Input, Flex, Text, IconButton } from 'components/atoms'
 import { TProduto } from 'services/api/produtos/types'
 import { store, actions, useSelector } from 'store'
+import { propsEquals } from 'utils/equality'
 
 type Props = {
   produto: TProduto
@@ -67,4 +68,4 @@ const Produto = ({ produto }: Props) => {
   )
 }
 
-export default Produto
+export default memo(Produto, propsEquals)

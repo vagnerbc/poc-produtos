@@ -53,7 +53,9 @@ const reducers = {
     const newLoadingMap = [...state.loadingMap]
     newLoadingMap.splice(state.loadingMap.indexOf(action.payload), 1)
     state.loadingMap = newLoadingMap
-    state.countChanges = state.countChanges++
+
+    let countChanges = state.countChanges
+    state.countChanges = ++countChanges
   },
   deleteFailure: (state: State) => {
     state.deleteStatus = 'failure'
@@ -74,7 +76,9 @@ const reducers = {
     const newLoadingMap = [...state.loadingMap]
     newLoadingMap.splice(state.loadingMap.indexOf(action.payload.sku), 1)
     state.loadingMap = newLoadingMap
-    state.countChanges = state.countChanges++
+
+    let countChanges = state.countChanges
+    state.countChanges = ++countChanges
   },
   updateFailure: (state: State) => {
     state.updateStatus = 'failure'
