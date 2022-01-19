@@ -2,7 +2,7 @@ import { useEffect, useCallback } from 'react'
 import { TDucksNames, store, actions } from 'store'
 import { useNetwork } from './useNetwork'
 
-export const useSync = (ducks: TDucksNames[], interval = 60 * 2000) => {
+export const useSync = (ducks: TDucksNames[], interval = 15 * 1000) => {
   const isOnline = useNetwork()
 
   const sync = useCallback(() => {

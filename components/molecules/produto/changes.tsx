@@ -1,5 +1,6 @@
 import { CircularProgress, CircularProgressLabel, Box } from 'components/atoms'
 import { useChanges } from 'hooks/useChanges'
+import { memo } from 'react'
 import { useSelector } from 'store'
 
 const Changes = () => {
@@ -28,4 +29,4 @@ const Changes = () => {
   )
 }
 
-export default Changes
+export default memo(Changes)
