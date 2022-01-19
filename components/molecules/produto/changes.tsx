@@ -12,16 +12,18 @@ const Changes = () => {
 
   return (
     <Box width="32px" height="32px">
-      {!count ? null : (
+      {!isSyncing ? null : (
         <CircularProgress
           isIndeterminate={isSyncing}
           color="secondary"
           size="32px"
           thickness="8px"
         >
-          <CircularProgressLabel color="white" fontSize="12px">
-            {count}
-          </CircularProgressLabel>
+          {!count ? null : (
+            <CircularProgressLabel color="white" fontSize="12px">
+              {count}
+            </CircularProgressLabel>
+          )}
         </CircularProgress>
       )}
     </Box>
